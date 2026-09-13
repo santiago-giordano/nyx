@@ -10,7 +10,7 @@
       <legend class="fieldset-legend">Approved Commands</legend>
       <div class="p-2 space-y-4">
         <div class="text-sm text-gray-300 mb-4">
-          These commands can be executed by Alice without requiring approval.
+          These commands can be executed by Nyx without requiring approval.
           Commands approved "for session" are shown in the current session
           column.
         </div>

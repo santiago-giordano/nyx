@@ -57,7 +57,7 @@ function forgetListenerWrapper(
   return wrapper
 }
 
-const aliceIPC = {
+const nyxIPC = {
   on(channel: string, listener: IpcListener) {
     assertAllowedChannel(channel, isAllowedEventChannel, 'event')
     if (typeof listener !== 'function') {
@@ -100,7 +100,7 @@ contextBridge.exposeInMainWorld('electron', {
 })
 
 // --------- Expose a narrow, allowlisted API to the Renderer process ---------
-contextBridge.exposeInMainWorld('aliceIPC', aliceIPC)
+contextBridge.exposeInMainWorld('nyxIPC', nyxIPC)
 
 contextBridge.exposeInMainWorld('settingsAPI', {
   loadSettings: () => ipcRenderer.invoke('settings:load'),
@@ -148,9 +148,9 @@ contextBridge.exposeInMainWorld('customAvatarsAPI', {
 
 contextBridge.exposeInMainWorld('desktopAPI', {
   listDirectory: (dirPath: string) =>
-    aliceIPC.invoke('desktop:listDirectory', dirPath),
+    nyxIPC.invoke('desktop:listDirectory', dirPath),
   executeCommand: (command: string) =>
-    aliceIPC.invoke('desktop:executeCommand', command),
+    nyxIPC.invoke('desktop:executeCommand', command),
 })
 
 // --------- Preload scripts loading ---------

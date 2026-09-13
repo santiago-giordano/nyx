@@ -34,7 +34,7 @@ export async function* streamViaMainProcess(
   request: MainProcessStreamRequest,
   signal?: AbortSignal
 ): AsyncGenerator<any> {
-  if (typeof window === 'undefined' || !window.aliceIPC) {
+  if (typeof window === 'undefined' || !window.nyxIPC) {
     throw new Error('Electron IPC bridge is unavailable.')
   }
 
@@ -72,11 +72,11 @@ export async function* streamViaMainProcess(
   }
 
   const abort = () => {
-    void window.aliceIPC.invoke('http:stream-cancel', { requestId })
+    void window.nyxIPC.invoke('http:stream-cancel', { requestId })
     pushEvent({ type: 'error', error: 'The operation was aborted.' })
   }
 
-  window.aliceIPC.on(channel, listener as any)
+  window.nyxIPC.on(channel, listener as any)
   signal?.addEventListener('abort', abort, { once: true })
 
   try {
@@ -84,7 +84,7 @@ export async function* streamViaMainProcess(
       throw createAbortError()
     }
 
-    const startResult = await window.aliceIPC.invoke('http:stream-start', {
+    const startResult = await window.nyxIPC.invoke('http:stream-start', {
       requestId,
       ...request,
     })
@@ -119,7 +119,7 @@ export async function* streamViaMainProcess(
   } finally {
     finished = true
     signal?.removeEventListener('abort', abort)
-    window.aliceIPC.off(channel, listener as any)
-    void window.aliceIPC.invoke('http:stream-cancel', { requestId })
+    window.nyxIPC.off(channel, listener as any)
+    void window.nyxIPC.invoke('http:stream-cancel', { requestId })
   }
 }

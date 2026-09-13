@@ -91,7 +91,7 @@ const openImageWithSystemViewer = (absoluteFilePath: string) => {
   console.log(
     `Requesting to open image with system viewer at OS path: ${correctedPath}`
   )
-  window.aliceIPC
+  window.nyxIPC
     .invoke('electron:open-path', { target: correctedPath })
     .then(result => {
       if (!result.success) {
@@ -245,7 +245,7 @@ const handleChatClick = (event: MouseEvent) => {
           href.startsWith('mailto:'))
       ) {
         event.preventDefault()
-        window.aliceIPC
+        window.nyxIPC
           .invoke('electron:open-path', { target: href })
           .then(result => {
             if (!result.success) {

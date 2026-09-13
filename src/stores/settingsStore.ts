@@ -28,7 +28,7 @@ The summary should help provide context for future interactions, allowing the co
 **Keep the summary to 2-4 sentences and definitely no more than 150 words.**
 Do not add any conversational fluff, commentary, or an introductory/concluding sentence like "Here is the summary:". Just provide the factual summary of the conversation transcript.`
 
-export interface AliceSettings {
+export interface NyxSettings {
   VITE_OPENAI_API_KEY: string
   VITE_OPENROUTER_API_KEY: string
   VITE_ZAI_API_KEY: string
@@ -110,7 +110,7 @@ export interface AliceSettings {
   onboardingCompleted: boolean
 }
 
-function hasMinimumConfigForOnboarding(config: AliceSettings): boolean {
+function hasMinimumConfigForOnboarding(config: NyxSettings): boolean {
   if (config.VITE_OPENAI_API_KEY?.trim()) {
     return true
   }
@@ -140,7 +140,7 @@ function hasMinimumConfigForOnboarding(config: AliceSettings): boolean {
   return false
 }
 
-const defaultSettings: AliceSettings = {
+const defaultSettings: NyxSettings = {
   VITE_OPENAI_API_KEY: '',
   VITE_OPENROUTER_API_KEY: '',
   VITE_ZAI_API_KEY: '',
@@ -214,7 +214,7 @@ const defaultSettings: AliceSettings = {
   onboardingCompleted: false,
 }
 
-const settingKeyToLabelMap: Record<keyof AliceSettings, string> = {
+const settingKeyToLabelMap: Record<keyof NyxSettings, string> = {
   VITE_OPENAI_API_KEY: 'OpenAI API Key',
   VITE_OPENROUTER_API_KEY: 'OpenRouter API Key',
   VITE_ZAI_API_KEY: 'Z.ai API Key',
@@ -281,7 +281,7 @@ const settingKeyToLabelMap: Record<keyof AliceSettings, string> = {
   onboardingCompleted: 'Onboarding Completed',
 }
 
-const ESSENTIAL_CORE_API_KEYS: (keyof AliceSettings)[] = [
+const ESSENTIAL_CORE_API_KEYS: (keyof NyxSettings)[] = [
   'VITE_OPENAI_API_KEY',
   'VITE_OPENROUTER_API_KEY',
   'VITE_ZAI_API_KEY',
@@ -289,7 +289,7 @@ const ESSENTIAL_CORE_API_KEYS: (keyof AliceSettings)[] = [
   'VITE_DEEPSEEK_API_KEY',
 ]
 
-function requiresOpenAIKey(config: AliceSettings): boolean {
+function requiresOpenAIKey(config: NyxSettings): boolean {
   return (
     config.aiProvider === 'openai' ||
     config.sttProvider === 'openai' ||
@@ -299,7 +299,7 @@ function requiresOpenAIKey(config: AliceSettings): boolean {
 }
 
 export const useSettingsStore = defineStore('settings', () => {
-  const settings = ref<AliceSettings>({ ...defaultSettings })
+  const settings = ref<NyxSettings>({ ...defaultSettings })
   const isLoading = ref(false)
   const isSaving = ref(false)
   const error = ref<string | null>(null)
@@ -309,8 +309,8 @@ export const useSettingsStore = defineStore('settings', () => {
   const sessionApprovedCommands = ref<string[]>([])
 
   const validateAndFixSettings = (
-    loadedSettings: Partial<AliceSettings>
-  ): { settings: AliceSettings; migrated: boolean } => {
+    loadedSettings: Partial<NyxSettings>
+  ): { settings: NyxSettings; migrated: boolean } => {
     const validated = { ...defaultSettings, ...loadedSettings }
     let migrated = false
 
@@ -432,7 +432,7 @@ export const useSettingsStore = defineStore('settings', () => {
 
   const areEssentialSettingsProvided = computed(() => {
     if (!isProduction.value) return true
-    const essentialKeys: (keyof AliceSettings)[] = [
+    const essentialKeys: (keyof NyxSettings)[] = [
       'assistantModel',
       'SUMMARIZATION_MODEL',
     ]
@@ -533,7 +533,7 @@ export const useSettingsStore = defineStore('settings', () => {
     return true
   })
 
-  const config = computed<Readonly<AliceSettings>>(() => {
+  const config = computed<Readonly<NyxSettings>>(() => {
     if (isProduction.value) {
       return settings.value
     }
@@ -598,7 +598,7 @@ export const useSettingsStore = defineStore('settings', () => {
         const loaded = await window.settingsAPI.loadSettings()
         if (loaded) {
           const result = validateAndFixSettings(
-            loaded as Partial<AliceSettings>
+            loaded as Partial<NyxSettings>
           )
           settings.value = result.settings
           await ensureOnboardingStateConsistency()
@@ -625,13 +625,13 @@ export const useSettingsStore = defineStore('settings', () => {
           settings.value = result.settings
         }
       } else {
-        let devCombinedSettings: AliceSettings = { ...defaultSettings }
+        let devCombinedSettings: NyxSettings = { ...defaultSettings }
         if (window.settingsAPI) {
           const loadedDevSettings = await window.settingsAPI.loadSettings()
           if (loadedDevSettings) {
             devCombinedSettings = {
               ...devCombinedSettings,
-              ...(loadedDevSettings as Partial<AliceSettings>),
+              ...(loadedDevSettings as Partial<NyxSettings>),
             }
 
             if (
@@ -643,7 +643,7 @@ export const useSettingsStore = defineStore('settings', () => {
           }
         }
         for (const key of Object.keys(defaultSettings) as Array<
-          keyof AliceSettings
+          keyof NyxSettings
         >) {
           if (key === 'onboardingCompleted') {
             continue
@@ -688,7 +688,7 @@ export const useSettingsStore = defineStore('settings', () => {
             '[SettingsStore] Settings validation failed, using unvalidated settings:',
             error
           )
-          settings.value = devCombinedSettings as AliceSettings
+          settings.value = devCombinedSettings as NyxSettings
         }
       }
 
@@ -734,7 +734,7 @@ export const useSettingsStore = defineStore('settings', () => {
   }
 
   function updateSetting(
-    key: keyof AliceSettings,
+    key: keyof NyxSettings,
     value: string | boolean | number | string[]
   ) {
     if (
@@ -855,7 +855,7 @@ export const useSettingsStore = defineStore('settings', () => {
     isSaving.value = true
     error.value = null
     try {
-      const plainSettings: AliceSettings = {
+      const plainSettings: NyxSettings = {
         VITE_OPENAI_API_KEY: settings.value.VITE_OPENAI_API_KEY,
         VITE_OPENROUTER_API_KEY: settings.value.VITE_OPENROUTER_API_KEY,
         VITE_ZAI_API_KEY: settings.value.VITE_ZAI_API_KEY,

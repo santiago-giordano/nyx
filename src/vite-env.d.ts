@@ -21,7 +21,7 @@ interface ElectronAppSettings {
 
 declare global {
   interface Window {
-    aliceIPC: AliceIPC
+    nyxIPC: AliceIPC
     desktopAPI: AliceDesktopAPI
     electron: {
       resize: (dimensions: { width: number; height: number }) => void

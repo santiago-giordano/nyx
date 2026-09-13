@@ -139,7 +139,7 @@ async function fetchMemories() {
   isLoading.value = true
   listError.value = null
   try {
-    const result = await window.aliceIPC.invoke('memory:get', { limit: 200 })
+    const result = await window.nyxIPC.invoke('memory:get', { limit: 200 })
     if (result.success) {
       memories.value = result.data.map((mem: any) => ({
         ...mem,
@@ -208,12 +208,12 @@ async function handleSaveMemory() {
     }
 
     if (editingMemoryId.value) {
-      result = await window.aliceIPC.invoke('memory:update', {
+      result = await window.nyxIPC.invoke('memory:update', {
         id: editingMemoryId.value,
         ...memoryData,
       })
     } else {
-      result = await window.aliceIPC.invoke('memory:save', memoryData)
+      result = await window.nyxIPC.invoke('memory:save', memoryData)
     }
 
     if (result.success) {
@@ -259,7 +259,7 @@ async function confirmDeleteMemory(id: string) {
     isLoading.value = true
     listError.value = null
     try {
-      const result = await window.aliceIPC.invoke('memory:delete', { id })
+      const result = await window.nyxIPC.invoke('memory:delete', { id })
       if (result.success) {
         await fetchMemories()
       } else {
@@ -282,7 +282,7 @@ async function confirmDeleteAllMemories() {
     isLoading.value = true
     listError.value = null
     try {
-      const result = await window.aliceIPC.invoke('memory:delete-all')
+      const result = await window.nyxIPC.invoke('memory:delete-all')
       if (result.success) {
         await fetchMemories()
       } else {

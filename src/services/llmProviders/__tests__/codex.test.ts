@@ -26,7 +26,7 @@ describe('listCodexModels', () => {
       ],
     })
     ;(globalThis as any).window = {
-      aliceIPC: { invoke },
+      nyxIPC: { invoke },
     }
 
     await expect(listCodexModels()).resolves.toEqual([
@@ -48,7 +48,7 @@ describe('listCodexModels', () => {
 
   it('falls back to safe static models when discovery fails', async () => {
     ;(globalThis as any).window = {
-      aliceIPC: {
+      nyxIPC: {
         invoke: vi.fn().mockResolvedValue({ success: false }),
       },
     }
@@ -191,7 +191,7 @@ describe('listCodexModels', () => {
       })
 
     ;(globalThis as any).window = {
-      aliceIPC: {
+      nyxIPC: {
         invoke,
         on: vi.fn((channel: string, listener: any) => {
           listeners.set(channel, listener)
@@ -288,7 +288,7 @@ describe('listCodexModels', () => {
       })
 
     ;(globalThis as any).window = {
-      aliceIPC: {
+      nyxIPC: {
         invoke,
         on: vi.fn((channel: string, listener: any) => {
           listeners.set(channel, listener)

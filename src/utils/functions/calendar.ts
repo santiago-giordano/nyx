@@ -54,7 +54,7 @@ export async function schedule_task(
       }
     }
 
-    const result = await window.aliceIPC.invoke('scheduler:create-task', {
+    const result = await window.nyxIPC.invoke('scheduler:create-task', {
       name: args.name,
       cronExpression,
       actionType: args.action_type,
@@ -88,7 +88,7 @@ export async function manage_scheduled_tasks(
   try {
     switch (args.action) {
       case 'list': {
-        const result = await window.aliceIPC.invoke(
+        const result = await window.nyxIPC.invoke(
           'scheduler:get-all-tasks'
         )
         if (result.success) {
@@ -126,7 +126,7 @@ export async function manage_scheduled_tasks(
           }
         }
 
-        const result = await window.aliceIPC.invoke(
+        const result = await window.nyxIPC.invoke(
           'scheduler:delete-task',
           {
             taskId: args.task_id,
@@ -154,7 +154,7 @@ export async function manage_scheduled_tasks(
           }
         }
 
-        const result = await window.aliceIPC.invoke(
+        const result = await window.nyxIPC.invoke(
           'scheduler:toggle-task',
           {
             taskId: args.task_id,
@@ -192,7 +192,7 @@ export async function get_calendar_events(args: {
   maxResults?: number
 }): Promise<FunctionResult> {
   try {
-    const result = await window.aliceIPC.invoke(
+    const result = await window.nyxIPC.invoke(
       'google-calendar:list-events',
       {
         calendarId: args.calendarId || 'primary',
@@ -235,7 +235,7 @@ export async function create_calendar_event(args: {
       eventResource.attendees = args.attendees.map(email => ({ email }))
     }
 
-    const result = await window.aliceIPC.invoke(
+    const result = await window.nyxIPC.invoke(
       'google-calendar:create-event',
       {
         calendarId: args.calendarId || 'primary',
@@ -283,7 +283,7 @@ export async function update_calendar_event(args: {
       }
     }
 
-    const result = await window.aliceIPC.invoke(
+    const result = await window.nyxIPC.invoke(
       'google-calendar:update-event',
       {
         calendarId: args.calendarId || 'primary',
@@ -308,7 +308,7 @@ export async function delete_calendar_event(args: {
   eventId: string
 }): Promise<FunctionResult> {
   try {
-    const result = await window.aliceIPC.invoke(
+    const result = await window.nyxIPC.invoke(
       'google-calendar:delete-event',
       {
         calendarId: args.calendarId || 'primary',

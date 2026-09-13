@@ -1,9 +1,9 @@
 {
-  "name": "alice-ai-app",
-  "version": "1.5.0",
+  "name": "nyx-ai-app",
+  "version": "0.1.0",
   "main": "dist-electron/main/index.js",
-  "description": "Alice AI assistant app",
-  "author": "pmbstyle",
+  "description": "Nyx — local AI assistant, part of the Hermes pantheon",
+  "author": "giorda",
   "license": "MIT",
   "private": true,
   "engines": {

@@ -45,7 +45,7 @@ export function useCodexAuth() {
     codexAuthStatus.isLoading = true
     codexAuthStatus.error = null
     try {
-      const result = await window.aliceIPC.invoke('codex-auth:status')
+      const result = await window.nyxIPC.invoke('codex-auth:status')
       syncSettings(result || {})
       if (result?.error) {
         codexAuthStatus.error = result.error
@@ -68,7 +68,7 @@ export function useCodexAuth() {
     codexAuthStatus.error = null
     codexAuthStatus.message = null
     try {
-      const result = await window.aliceIPC.invoke('codex-auth:start-login')
+      const result = await window.nyxIPC.invoke('codex-auth:start-login')
       if (result?.success) {
         codexAuthStatus.message =
           'ChatGPT authorization opened in your browser.'
@@ -91,7 +91,7 @@ export function useCodexAuth() {
     codexAuthStatus.error = null
     codexAuthStatus.message = 'Disconnecting ChatGPT Codex...'
     try {
-      const result = await window.aliceIPC.invoke('codex-auth:disconnect')
+      const result = await window.nyxIPC.invoke('codex-auth:disconnect')
       if (result?.success) {
         syncSettings({ available: true, connected: false })
         codexAuthStatus.authInProgress = false
@@ -141,30 +141,30 @@ export function useCodexAuth() {
 
   onMounted(async () => {
     await checkCodexAuthStatus()
-    if (window.aliceIPC) {
-      window.aliceIPC.on(
+    if (window.nyxIPC) {
+      window.nyxIPC.on(
         'codex-auth-login-completed',
         handleCodexLoginCompleted
       )
-      window.aliceIPC.on(
+      window.nyxIPC.on(
         'codex-auth-status-changed',
         handleCodexStatusChanged
       )
-      window.aliceIPC.on('codex-auth-updated', handleCodexAccountUpdated)
+      window.nyxIPC.on('codex-auth-updated', handleCodexAccountUpdated)
     }
   })
 
   onUnmounted(() => {
-    if (window.aliceIPC) {
-      window.aliceIPC.off(
+    if (window.nyxIPC) {
+      window.nyxIPC.off(
         'codex-auth-login-completed',
         handleCodexLoginCompleted
       )
-      window.aliceIPC.off(
+      window.nyxIPC.off(
         'codex-auth-status-changed',
         handleCodexStatusChanged
       )
-      window.aliceIPC.off('codex-auth-updated', handleCodexAccountUpdated)
+      window.nyxIPC.off('codex-auth-updated', handleCodexAccountUpdated)
     }
   })
 

@@ -171,7 +171,7 @@ const isFinishing = ref(false)
 
 const currentStepTitle = computed(() => {
   const titles = {
-    1: 'Welcome to Alice',
+    1: 'Welcome to Nyx',
     2: 'AI Provider Setup',
     3: 'Voice & Memory Mode',
     4: 'Final Configuration',
@@ -233,13 +233,13 @@ watch(step, async () => {
 
 onMounted(() => {
   window.electron?.resize?.(WIZARD_WINDOW_SIZE)
-  window.aliceIPC?.on?.('codex-auth-status-changed', handleCodexStatus)
-  window.aliceIPC?.on?.('codex-auth-login-completed', handleCodexLogin)
+  window.nyxIPC?.on?.('codex-auth-status-changed', handleCodexStatus)
+  window.nyxIPC?.on?.('codex-auth-login-completed', handleCodexLogin)
 })
 
 onUnmounted(() => {
-  window.aliceIPC?.off?.('codex-auth-status-changed', handleCodexStatus)
-  window.aliceIPC?.off?.('codex-auth-login-completed', handleCodexLogin)
+  window.nyxIPC?.off?.('codex-auth-status-changed', handleCodexStatus)
+  window.nyxIPC?.off?.('codex-auth-login-completed', handleCodexLogin)
 })
 
 const toggleLocalModels = (useLocal: boolean) => {
@@ -503,7 +503,7 @@ const testDeepSeekKey = async () => {
 }
 
 const syncCodexStatus = async () => {
-  const status = await window.aliceIPC.invoke('codex-auth:status')
+  const status = await window.nyxIPC.invoke('codex-auth:status')
   const connected = Boolean(status?.connected)
   formData.codexAuthConnected = connected
   formData.codexAccountLabel = connected ? status.accountLabel || 'Connected' : ''
@@ -529,7 +529,7 @@ const testCodexAuth = async () => {
       return
     }
 
-    const result = await window.aliceIPC.invoke('codex-auth:start-login')
+    const result = await window.nyxIPC.invoke('codex-auth:start-login')
     if (!result?.success) {
       testResult.codex.error =
         result?.error || 'Failed to start ChatGPT Codex authorization.'
@@ -537,7 +537,7 @@ const testCodexAuth = async () => {
     }
 
     testResult.codex.error =
-      'Browser authorization opened. Finish it, then return to Alice.'
+      'Browser authorization opened. Finish it, then return to Nyx.'
   } catch (e: any) {
     testResult.codex.error =
       'ChatGPT Codex authorization failed: ' + (e.message || String(e))
@@ -747,7 +747,7 @@ const closeWizard = () => {
       return
     }
 
-    window.aliceIPC?.send?.('close-app')
+    window.nyxIPC?.send?.('close-app')
   } catch (error) {
     console.error('Failed to close onboarding wizard:', error)
   }

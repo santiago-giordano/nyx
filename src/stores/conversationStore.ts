@@ -369,8 +369,8 @@ export const useConversationStore = defineStore('conversation', () => {
     currentResponseId.value = null
     currentConversationTurnId.value = `turn-${Date.now()}`
 
-    if (window.aliceIPC) {
-      window.aliceIPC.on(
+    if (window.nyxIPC) {
+      window.nyxIPC.on(
         'scheduler:reminder',
         async reminderData => {
           console.log(
@@ -455,7 +455,7 @@ export const useConversationStore = defineStore('conversation', () => {
         isSummarizing.value = value
       },
       fetchRecentMessages: limit =>
-        window.aliceIPC.invoke('summaries:get-recent-messages', { limit }),
+        window.nyxIPC.invoke('summaries:get-recent-messages', { limit }),
       analyzeContext: (formattedMessages, model) =>
         api.createContextAnalysisResponse(formattedMessages, model),
       createSummary: (formattedMessages, model, systemPrompt) =>
@@ -465,7 +465,7 @@ export const useConversationStore = defineStore('conversation', () => {
           systemPrompt
         ),
       saveSummary: params =>
-        window.aliceIPC.invoke('summaries:save-summary', params),
+        window.nyxIPC.invoke('summaries:save-summary', params),
       setEphemeralEmotionalContext: value => {
         ephemeralEmotionalContext.value = value
       },
@@ -495,15 +495,15 @@ export const useConversationStore = defineStore('conversation', () => {
   function createReminderHandlerDependencies(): ReminderHandlerDependencies {
     return {
       subscribe: handler => {
-        if (!window.aliceIPC) {
+        if (!window.nyxIPC) {
           return () => {}
         }
         const listener = (reminderData: any) => {
           handler(reminderData)
         }
-        window.aliceIPC.on('scheduler:reminder', listener)
+        window.nyxIPC.on('scheduler:reminder', listener)
         return () => {
-          window.aliceIPC?.off('scheduler:reminder', listener)
+          window.nyxIPC?.off('scheduler:reminder', listener)
         }
       },
       addMessage: message => generalStore.addMessageToHistory(message),
@@ -538,7 +538,7 @@ export const useConversationStore = defineStore('conversation', () => {
         maxContextChars: settingsStore.config.ragMaxContextChars,
       }),
       fetchLatestSummary: () =>
-        window.aliceIPC.invoke('summaries:get-latest-summary', {}),
+        window.nyxIPC.invoke('summaries:get-latest-summary', {}),
       getChatHistory: () => [...chatHistory.value],
       buildApiInput,
       addAssistantPlaceholder: () =>
@@ -726,7 +726,7 @@ export const useConversationStore = defineStore('conversation', () => {
         partialIndex: number
       ) => {
         try {
-          const saveResult = await window.aliceIPC.invoke(
+          const saveResult = await window.nyxIPC.invoke(
             'save-image-from-base64',
             {
               base64Data: base64,
@@ -751,7 +751,7 @@ export const useConversationStore = defineStore('conversation', () => {
       },
       handleImageFinal: async (generationId: string, base64: string) => {
         try {
-          const saveResult = await window.aliceIPC.invoke(
+          const saveResult = await window.nyxIPC.invoke(
             'save-image-from-base64',
             {
               base64Data: base64,
@@ -922,7 +922,7 @@ export const useConversationStore = defineStore('conversation', () => {
       content: [{ type: 'input_text', text: prompt }],
     })
 
-    const summaryResult = await window.aliceIPC.invoke(
+    const summaryResult = await window.nyxIPC.invoke(
       'summaries:get-latest-summary',
       {}
     )

@@ -181,7 +181,7 @@
         class="text-xs text-gray-400 mt-4 flex justify-center items-center gap-1"
       >
         <span
-          >Alice
+          >Nyx
           <a
             :href="
               'https://github.com/pmbstyle/Alice/releases/tag/v' + appVersion
@@ -209,7 +209,7 @@
 <script setup lang="ts">
 import { ref, watch, onMounted, computed } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useSettingsStore, type AliceSettings } from '../stores/settingsStore'
+import { useSettingsStore, type NyxSettings } from '../stores/settingsStore'
 import { useConversationStore } from '../stores/conversationStore'
 import { heartIcon } from '../utils/assetsImport'
 import { PREDEFINED_OPENAI_TOOLS } from '../utils/assistantTools'
@@ -233,7 +233,7 @@ const settingsStore = useSettingsStore()
 const conversationStore = useConversationStore()
 const { settings } = storeToRefs(settingsStore)
 
-const currentSettings = ref<AliceSettings>({
+const currentSettings = ref<NyxSettings>({
   ...settings.value,
 })
 const activeTab = ref<
@@ -341,18 +341,18 @@ function getToolInfo(name: string): {
   }
 
   const descriptionMap: Record<string, string> = {
-    get_current_datetime: 'Allows Alice to get the current date and time',
+    get_current_datetime: 'Allows Nyx to get the current date and time',
     open_path:
-      "Allows Alice to open apps, URLs, files, and folders on the user's computer",
-    manage_clipboard: "Alice can read and write to the user's clipboard",
-    save_memory: 'Alice can store memories (long term memory)',
-    delete_memory: 'Alice can delete memories (long term memory)',
-    recall_memories: 'Alice can recall memories (long term memory)',
+      "Allows Nyx to open apps, URLs, files, and folders on the user's computer",
+    manage_clipboard: "Nyx can read and write to the user's clipboard",
+    save_memory: 'Nyx can store memories (long term memory)',
+    delete_memory: 'Nyx can delete memories (long term memory)',
+    recall_memories: 'Nyx can recall memories (long term memory)',
     list_directory:
-      "Alice can list the files and folders on the user's computer",
-    execute_command: "Alice can execute shell commands on the user's computer",
-    schedule_task: 'Alice can schedule tasks to run on a recurring basis',
-    manage_scheduled_tasks: 'Alice can manage scheduled tasks',
+      "Nyx can list the files and folders on the user's computer",
+    execute_command: "Nyx can execute shell commands on the user's computer",
+    schedule_task: 'Nyx can schedule tasks to run on a recurring basis',
+    manage_scheduled_tasks: 'Nyx can manage scheduled tasks',
     get_calendar_events: 'Google Calendar integration to get calendar events',
     create_calendar_event:
       'Google Calendar integration to create calendar events',
@@ -364,11 +364,11 @@ function getToolInfo(name: string): {
     search_emails: 'Google Gmail integration to search emails',
     get_email_content: 'Google Gmail integration to get email content',
     search_torrents:
-      'Alice can search for torrents on the internet (requires Jackett)',
+      'Nyx can search for torrents on the internet (requires Jackett)',
     add_torrent_to_qb:
-      'Alice can add a torrent to qBittorrent (requires qBittorrent)',
+      'Nyx can add a torrent to qBittorrent (requires qBittorrent)',
     browser_context:
-      'Alice can get information about the current webpage in users browser (requires browser extension)',
+      'Nyx can get information about the current webpage in users browser (requires browser extension)',
     perform_web_search: 'For models that lack web search capabilities (Tavily)',
     searxng_web_search:
       'For models that lack web search capabilities (SearXNG)',
@@ -386,16 +386,16 @@ const resetSystemPrompt = () => {
   currentSettings.value.assistantSystemPrompt = DEFAULT_ASSISTANT_PERSONA_PROMPT
 }
 
-const startRecordingHotkey = (settingKey: keyof AliceSettings) => {
+const startRecordingHotkey = (settingKey: keyof NyxSettings) => {
   startRecordingHotkeyComposable(settingKey, currentSettings.value)
 }
 
-const clearHotkey = (settingKey: keyof AliceSettings) => {
+const clearHotkey = (settingKey: keyof NyxSettings) => {
   clearHotkeyComposable(settingKey, currentSettings.value)
 }
 
 const updateCurrentSetting = (
-  key: keyof AliceSettings,
+  key: keyof NyxSettings,
   value: string | boolean | number | string[]
 ) => {
   ;(currentSettings.value as any)[key] = value
@@ -410,7 +410,7 @@ function isToolConfigured(toolName: string): boolean {
     if (depKey === 'GOOGLE_AUTH') {
       return googleAuthStatus.isAuthenticated
     }
-    const value = currentLocalSettings[depKey as keyof AliceSettings]
+    const value = currentLocalSettings[depKey as keyof NyxSettings]
     if (typeof value === 'string') {
       return !!value.trim()
     }
@@ -445,12 +445,12 @@ watch(
   newValues => {
     for (const key in newValues) {
       if (
-        settingsStore.settings[key as keyof AliceSettings] !==
-        newValues[key as keyof AliceSettings]
+        settingsStore.settings[key as keyof NyxSettings] !==
+        newValues[key as keyof NyxSettings]
       ) {
-        const value = newValues[key as keyof AliceSettings]
+        const value = newValues[key as keyof NyxSettings]
         if (value !== undefined) {
-          settingsStore.updateSetting(key as keyof AliceSettings, value)
+          settingsStore.updateSetting(key as keyof NyxSettings, value)
         }
       }
     }
@@ -512,11 +512,11 @@ const handleSaveAndTestSettings = async () => {
 
   await settingsStore.saveAndTestSettings()
 
-  if (window.aliceIPC && window.location.hash === '#settings') {
+  if (window.nyxIPC && window.location.hash === '#settings') {
     try {
       const success = !settingsStore.error && settingsStore.successMessage
 
-      await window.aliceIPC.invoke('settings:notify-main-window', {
+      await window.nyxIPC.invoke('settings:notify-main-window', {
         type: 'settings-saved',
         success: success,
         validationComplete: true,

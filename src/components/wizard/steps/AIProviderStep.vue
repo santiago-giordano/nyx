@@ -3,7 +3,7 @@
     <div class="mb-6">
       <h2 class="text-2xl font-semibold mb-3">Choose Your AI Provider</h2>
       <p class="text-base-content/70">
-        Select how you want to power Alice's intelligence. You can always change
+        Select how you want to power Nyx's intelligence. You can always change
         this later.
       </p>
     </div>
@@ -180,7 +180,7 @@
         </svg>
         <span
           >Z.ai uses the GLM Coding Plan OpenAI-compatible endpoint. Web search
-          can still run through Alice tools if configured.</span
+          can still run through Nyx tools if configured.</span
         >
       </div>
 
@@ -292,7 +292,7 @@
         </svg>
         <span
           >MiniMax uses the OpenAI-compatible endpoint for token/coding plans.
-          Web search can still run through Alice tools if configured.</span
+          Web search can still run through Nyx tools if configured.</span
         >
       </div>
 
@@ -405,7 +405,7 @@
           ></path>
         </svg>
         <span>
-          DeepSeek uses an OpenAI-compatible chat completions endpoint. Alice
+          DeepSeek uses an OpenAI-compatible chat completions endpoint. Nyx
           disables DeepSeek thinking mode for tool-call compatibility.
         </span>
       </div>
@@ -535,7 +535,7 @@
           }}
         </p>
         <p class="text-sm text-base-content/70 mt-1">
-          Alice opens the official ChatGPT login in your browser. Tokens stay in
+          Nyx opens the official ChatGPT login in your browser. Tokens stay in
           the Codex app-server profile managed by the desktop app.
         </p>
       </div>

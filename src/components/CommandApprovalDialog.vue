@@ -31,7 +31,7 @@
 
       <div v-if="!isMinified" class="mb-4">
         <p class="text-sm text-base-content/70 mb-2">
-          Alice wants to execute the following command:
+          Nyx wants to execute the following command:
         </p>
         <div class="bg-base-200 rounded p-3 font-mono text-sm break-all">
           {{ command }}

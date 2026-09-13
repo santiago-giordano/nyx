@@ -27,7 +27,7 @@
             {{
               generalStore.statusMessage.includes('Error:')
                 ? 'Initialization Failed'
-                : 'Initializing Alice'
+                : 'Initializing Nyx'
             }}
           </p>
           <p
@@ -167,9 +167,9 @@ const clearAttachedFile = () => {
 }
 
 const openSettingsWindow = async () => {
-  if (window.aliceIPC) {
+  if (window.nyxIPC) {
     try {
-      await window.aliceIPC.invoke('settings-window:open')
+      await window.nyxIPC.invoke('settings-window:open')
     } catch (error) {
       console.error('Failed to open settings window:', error)
     }
@@ -318,8 +318,8 @@ watch(
         setTimeout(() => {
           // Keep chat selected when the user opens the panel after settings close.
           changeSidebarView('chat')
-          if (window.aliceIPC) {
-            window.aliceIPC.invoke('settings-window:close').catch(console.error)
+          if (window.nyxIPC) {
+            window.nyxIPC.invoke('settings-window:close').catch(console.error)
           }
           if (generalStore.audioState === 'CONFIG') {
             restoreInteractiveAudioState()

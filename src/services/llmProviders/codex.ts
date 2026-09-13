@@ -49,12 +49,12 @@ function normalizeCodexModelIds(result: CodexModelListResult): string[] {
 }
 
 async function listLiveCodexModelIds(): Promise<string[]> {
-  if (typeof window === 'undefined' || !window.aliceIPC) {
+  if (typeof window === 'undefined' || !window.nyxIPC) {
     return []
   }
 
   try {
-    const result = (await window.aliceIPC.invoke(
+    const result = (await window.nyxIPC.invoke(
       'codex-models:list'
     )) as CodexModelListResult
     return normalizeCodexModelIds(result)
@@ -401,7 +401,7 @@ async function* streamViaCodexAppServer(
   },
   signal?: AbortSignal
 ): AsyncGenerator<any> {
-  if (typeof window === 'undefined' || !window.aliceIPC) {
+  if (typeof window === 'undefined' || !window.nyxIPC) {
     throw new Error('Electron IPC bridge is unavailable.')
   }
 
@@ -437,11 +437,11 @@ async function* streamViaCodexAppServer(
   }
 
   const abort = () => {
-    void window.aliceIPC.invoke('codex-response:cancel', { requestId })
+    void window.nyxIPC.invoke('codex-response:cancel', { requestId })
     pushEvent({ type: 'error', error: 'The operation was aborted.' })
   }
 
-  window.aliceIPC.on(channel, listener as any)
+  window.nyxIPC.on(channel, listener as any)
   signal?.addEventListener('abort', abort, { once: true })
 
   try {
@@ -449,7 +449,7 @@ async function* streamViaCodexAppServer(
       throw createAbortError()
     }
 
-    const startResult = await window.aliceIPC.invoke(
+    const startResult = await window.nyxIPC.invoke(
       'codex-response:start',
       {
         requestId,
@@ -481,7 +481,7 @@ async function* streamViaCodexAppServer(
   } finally {
     finished = true
     signal?.removeEventListener('abort', abort)
-    window.aliceIPC.off(channel, listener as any)
-    void window.aliceIPC.invoke('codex-response:cancel', { requestId })
+    window.nyxIPC.off(channel, listener as any)
+    void window.nyxIPC.invoke('codex-response:cancel', { requestId })
   }
 }

@@ -83,13 +83,13 @@ export function useAudioProcessing() {
       )
       vadAssetBasePath.value = './'
     }
-    if (window.aliceIPC && !ipcListenersRegistered) {
-      window.aliceIPC.on('global-hotkey-mic-toggle', handleGlobalMicToggle)
-      window.aliceIPC.on(
+    if (window.nyxIPC && !ipcListenersRegistered) {
+      window.nyxIPC.on('global-hotkey-mic-toggle', handleGlobalMicToggle)
+      window.nyxIPC.on(
         'global-hotkey-mute-playback',
         handleGlobalMutePlayback
       )
-      window.aliceIPC.on(
+      window.nyxIPC.on(
         'global-hotkey-take-screenshot',
         handleGlobalTakeScreenshot
       )
@@ -329,13 +329,13 @@ export function useAudioProcessing() {
 
   onUnmounted(() => {
     destroyVAD()
-    if (window.aliceIPC && ownsIpcListeners) {
-      window.aliceIPC.off('global-hotkey-mic-toggle', handleGlobalMicToggle)
-      window.aliceIPC.off(
+    if (window.nyxIPC && ownsIpcListeners) {
+      window.nyxIPC.off('global-hotkey-mic-toggle', handleGlobalMicToggle)
+      window.nyxIPC.off(
         'global-hotkey-mute-playback',
         handleGlobalMutePlayback
       )
-      window.aliceIPC.off(
+      window.nyxIPC.off(
         'global-hotkey-take-screenshot',
         handleGlobalTakeScreenshot
       )

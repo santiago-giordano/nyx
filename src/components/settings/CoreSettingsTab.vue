@@ -773,7 +773,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
-import type { AliceSettings } from '../../stores/settingsStore'
+import type { NyxSettings } from '../../stores/settingsStore'
 import { backendApi, type Voice } from '../../services/backendApi'
 import { useCodexAuth } from '../../composables/useCodexAuth'
 
@@ -783,12 +783,12 @@ interface ServiceStatus {
 }
 
 const props = defineProps<{
-  currentSettings: AliceSettings
+  currentSettings: NyxSettings
 }>()
 
 const emit = defineEmits<{
   'update:setting': [
-    key: keyof AliceSettings,
+    key: keyof NyxSettings,
     value: string | boolean | number | string[],
   ]
 }>()
@@ -1094,7 +1094,7 @@ onUnmounted(() => {
 
 const refreshRagStats = async () => {
   try {
-    const result = await window.aliceIPC.invoke('rag:stats')
+    const result = await window.nyxIPC.invoke('rag:stats')
     if (result.success && result.data) {
       ragStats.value = result.data
     }
@@ -1105,7 +1105,7 @@ const refreshRagStats = async () => {
 
 const selectRagPaths = async () => {
   try {
-    const result = await window.aliceIPC.invoke('rag:select-paths')
+    const result = await window.nyxIPC.invoke('rag:select-paths')
     if (!result.success || !Array.isArray(result.data)) {
       return
     }
@@ -1125,7 +1125,7 @@ const indexRagPaths = async (paths: string[]) => {
   isIndexingRag.value = true
   ragStatusMessage.value = 'Indexing...'
   try {
-    const result = await window.aliceIPC.invoke('rag:index-paths', {
+    const result = await window.nyxIPC.invoke('rag:index-paths', {
       paths: normalizedPaths,
       recursive: true,
     })
@@ -1150,7 +1150,7 @@ const clearRagIndex = async () => {
   isIndexingRag.value = true
   ragStatusMessage.value = 'Clearing index...'
   try {
-    await window.aliceIPC.invoke('rag:clear')
+    await window.nyxIPC.invoke('rag:clear')
     ragStatusMessage.value = 'Index cleared'
   } catch (error) {
     ragStatusMessage.value = 'Failed to clear index'
@@ -1172,7 +1172,7 @@ const removeRagDocuments = async (pathItem: string) => {
   isIndexingRag.value = true
   ragStatusMessage.value = 'Removing documents...'
   try {
-    const result = await window.aliceIPC.invoke('rag:remove-paths', {
+    const result = await window.nyxIPC.invoke('rag:remove-paths', {
       paths: [pathItem],
     })
     if (result.success && result.data) {

@@ -21,7 +21,7 @@ export function useGoogleAuth() {
     googleAuthStatus.isLoading = true
     googleAuthStatus.error = null
     try {
-      const result = await window.aliceIPC.invoke(
+      const result = await window.nyxIPC.invoke(
         'google-calendar:check-auth-status'
       )
       if (result.success)
@@ -39,7 +39,7 @@ export function useGoogleAuth() {
     googleAuthStatus.error = null
     googleAuthStatus.message = null
     try {
-      const result = await window.aliceIPC.invoke(
+      const result = await window.nyxIPC.invoke(
         'google-calendar:get-auth-url'
       )
       if (result.success) googleAuthStatus.message = result.message
@@ -61,7 +61,7 @@ export function useGoogleAuth() {
     googleAuthStatus.error = null
     googleAuthStatus.message = 'Disconnecting...'
     try {
-      const result = await window.aliceIPC.invoke(
+      const result = await window.nyxIPC.invoke(
         'google-calendar:disconnect'
       )
       if (result.success) {
@@ -97,22 +97,22 @@ export function useGoogleAuth() {
 
   onMounted(async () => {
     await checkGoogleAuthStatus()
-    if (window.aliceIPC) {
-      window.aliceIPC.on(
+    if (window.nyxIPC) {
+      window.nyxIPC.on(
         'google-auth-loopback-success',
         handleGoogleAuthSuccess
       )
-      window.aliceIPC.on('google-auth-loopback-error', handleGoogleAuthError)
+      window.nyxIPC.on('google-auth-loopback-error', handleGoogleAuthError)
     }
   })
 
   onUnmounted(() => {
-    if (window.aliceIPC) {
-      window.aliceIPC.off(
+    if (window.nyxIPC) {
+      window.nyxIPC.off(
         'google-auth-loopback-success',
         handleGoogleAuthSuccess
       )
-      window.aliceIPC.off(
+      window.nyxIPC.off(
         'google-auth-loopback-error',
         handleGoogleAuthError
       )

@@ -113,9 +113,9 @@ export class BackendApi {
   async initialize(): Promise<void> {
     try {
       // Check if we're in Electron environment
-      if (typeof window !== 'undefined' && window.aliceIPC) {
+      if (typeof window !== 'undefined' && window.nyxIPC) {
         // Get API URL from Electron main process
-        const result = await window.aliceIPC.invoke('backend:get-api-url')
+        const result = await window.nyxIPC.invoke('backend:get-api-url')
         if (result?.success && result.data?.apiUrl) {
           this.baseUrl = result.data.apiUrl
           this.client.defaults.baseURL = this.baseUrl

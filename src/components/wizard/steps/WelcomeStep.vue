@@ -21,7 +21,7 @@
         </svg>
       </div>
 
-      <h2 class="text-2xl font-semibold mb-3">Set up Alice essentials</h2>
+      <h2 class="text-2xl font-semibold mb-3">Set up Nyx essentials</h2>
       <p class="text-base-content/65 max-w-md mx-auto">
         Choose the model provider, voice path, and memory mode now. You can
         fine-tune the details later in Settings.

@@ -29,7 +29,7 @@ export async function open_path(args: OpenPathArgs): Promise<FunctionResult> {
   console.log(`Invoking open_path with target: ${args.target}`)
 
   try {
-    if (typeof window === 'undefined' || !window.aliceIPC?.invoke) {
+    if (typeof window === 'undefined' || !window.nyxIPC?.invoke) {
       return {
         success: false,
         error:
@@ -37,7 +37,7 @@ export async function open_path(args: OpenPathArgs): Promise<FunctionResult> {
       }
     }
 
-    const result = await window.aliceIPC.invoke('electron:open-path', args)
+    const result = await window.nyxIPC.invoke('electron:open-path', args)
     console.log('Main process response for open_path:', result)
 
     if (result.success) {

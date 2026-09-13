@@ -130,16 +130,16 @@
 </template>
 
 <script setup lang="ts">
-import type { AliceSettings } from '../../stores/settingsStore'
+import type { NyxSettings } from '../../stores/settingsStore'
 
 defineProps<{
-  currentSettings: AliceSettings
-  isRecordingHotkeyFor: keyof AliceSettings | null
+  currentSettings: NyxSettings
+  isRecordingHotkeyFor: keyof NyxSettings | null
 }>()
 
 defineEmits<{
-  'start-recording-hotkey': [settingKey: keyof AliceSettings]
-  'clear-hotkey': [settingKey: keyof AliceSettings]
+  'start-recording-hotkey': [settingKey: keyof NyxSettings]
+  'clear-hotkey': [settingKey: keyof NyxSettings]
 }>()
 
 function formatAccelerator(accelerator: string | undefined): string {

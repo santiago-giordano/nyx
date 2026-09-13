@@ -1,17 +1,17 @@
 // @see https://www.electron.build/configuration/configuration
 {
   $schema: 'https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json',
-  appId: 'aliceaiapp',
+  appId: 'nyxaiapp',
   asar: true,
-  productName: 'Alice AI App',
+  productName: 'Nyx',
   directories: {
     output: 'release/${version}',
   },
   publish: [
     {
       provider: 'github',
-      owner: 'pmbstyle',
-      repo: 'Alice',
+      owner: 'santiago-giordano',
+      repo: 'alice',
       releaseType: 'release',
     },
   ],
@@ -44,9 +44,9 @@
     entitlementsInherit: 'build/entitlements.mac.plist',
     extendInfo: {
       NSMicrophoneUsageDescription:
-        'Alice uses the microphone for voice activity detection and speech recognition.',
+        'Nyx uses the microphone for voice activity detection and speech recognition.',
     },
-    artifactName: 'Alice-AI-App-Mac-${version}-Installer.${ext}',
+    artifactName: 'Nyx-Mac-${version}-Installer.${ext}',
   },
   win: {
     target: [
@@ -55,7 +55,7 @@
         arch: ['x64'],
       },
     ],
-    artifactName: 'Alice-AI-App-Windows-${version}-Setup.${ext}',
+    artifactName: 'Nyx-Windows-${version}-Setup.${ext}',
   },
   nsis: {
     oneClick: true,
@@ -68,6 +68,6 @@
     target: ['AppImage'],
     category: 'Utility',
     icon: 'public/app_logo.png',
-    artifactName: 'Alice-AI-App-Linux-${version}.${ext}',
+    artifactName: 'Nyx-Linux-${version}.${ext}',
   },
 }

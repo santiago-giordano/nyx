@@ -107,9 +107,9 @@ async function onMouseUp(_e: MouseEvent) {
   animationFrameId = null
 
   try {
-    await window.aliceIPC.invoke('set-overlay-opacity', 0)
+    await window.nyxIPC.invoke('set-overlay-opacity', 0)
     await new Promise(resolve => setTimeout(resolve, 50))
-    const source = (await window.aliceIPC.invoke('capture-screen'))[0]
+    const source = (await window.nyxIPC.invoke('capture-screen'))[0]
     const image = await navigator.mediaDevices.getUserMedia({
       video: {
         mandatory: {
@@ -145,11 +145,11 @@ async function onMouseUp(_e: MouseEvent) {
       rect.height
     )
     const dataURL = canvas.toDataURL('image/jpeg', 0.8)
-    window.aliceIPC.invoke('save-screenshot', dataURL)
-    window.aliceIPC.invoke('hide-overlay')
+    window.nyxIPC.invoke('save-screenshot', dataURL)
+    window.nyxIPC.invoke('hide-overlay')
   } catch (error) {
     console.error('Error taking screenshot:', error)
-    window.aliceIPC.invoke('hide-overlay')
+    window.nyxIPC.invoke('hide-overlay')
   }
 }
 
@@ -158,7 +158,7 @@ function onKeyDown(e: KeyboardEvent) {
     isSelecting = false
     draw()
     animationFrameId = null
-    window.aliceIPC.invoke('hide-overlay')
+    window.nyxIPC.invoke('hide-overlay')
   }
 }
 
@@ -169,8 +169,8 @@ onMounted(() => {
   })
   window.addEventListener('resize', resizeCanvas)
   window.addEventListener('focus', resizeCanvas)
-  if (window.aliceIPC) {
-    window.aliceIPC.on('overlay-shown', () => {
+  if (window.nyxIPC) {
+    window.nyxIPC.on('overlay-shown', () => {
       resizeCanvas()
     })
   }
@@ -181,8 +181,8 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  if (window.aliceIPC) {
-    window.aliceIPC.removeAllListeners('overlay-shown')
+  if (window.nyxIPC) {
+    window.nyxIPC.removeAllListeners('overlay-shown')
   }
   if (animationFrameId !== null) {
     cancelAnimationFrame(animationFrameId)

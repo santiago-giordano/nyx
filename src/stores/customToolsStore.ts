@@ -165,9 +165,9 @@ export const useCustomToolsStore = defineStore('customTools', () => {
   )
 
   // Subscribe once per renderer process to cross-window updates
-  if (window.aliceIPC && !ipcSubscriptionRegistered) {
+  if (window.nyxIPC && !ipcSubscriptionRegistered) {
     ipcSubscriptionRegistered = true
-    window.aliceIPC.on('custom-tools:updated', () => {
+    window.nyxIPC.on('custom-tools:updated', () => {
       refresh()
     })
   }

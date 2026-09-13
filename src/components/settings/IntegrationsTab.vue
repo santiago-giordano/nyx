@@ -257,7 +257,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AliceSettings } from '../../stores/settingsStore'
+import type { NyxSettings } from '../../stores/settingsStore'
 import { newTabIcon } from '../../utils/assetsImport'
 
 interface GoogleAuthStatus {
@@ -269,7 +269,7 @@ interface GoogleAuthStatus {
 }
 
 defineProps<{
-  currentSettings: AliceSettings
+  currentSettings: NyxSettings
   googleAuthStatus: GoogleAuthStatus
 }>()
 

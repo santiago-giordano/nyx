@@ -56,7 +56,7 @@ function installStreamIpcMock(assertStartArgs?: (args: any) => void) {
       return { success: false, error: `Unexpected channel: ${channel}` }
     })
 
-  ;(globalThis as any).window.aliceIPC = {
+  ;(globalThis as any).window.nyxIPC = {
     invoke,
     on: vi.fn((channel: string, listener: any) => {
       listeners.set(channel, listener)
