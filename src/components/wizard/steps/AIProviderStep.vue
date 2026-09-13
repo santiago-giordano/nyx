@@ -20,12 +20,14 @@
       >
         <option value="ollama">Ollama (local — recommended)</option>
         <option value="lm-studio">LM Studio (local)</option>
+        <!-- cloud providers hidden — not used
         <option value="openai">OpenAI (cloud)</option>
         <option value="openrouter">OpenRouter (cloud)</option>
         <option value="deepseek">DeepSeek (cloud)</option>
         <option value="minimax">MiniMax (cloud)</option>
         <option value="zai">Z.ai (cloud)</option>
         <option value="codex">ChatGPT Codex (cloud)</option>
+        -->
       </select>
     </div>
 

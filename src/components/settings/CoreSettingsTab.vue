@@ -17,14 +17,16 @@
             v-model="currentSettings.aiProvider"
             class="select select-bordered w-full focus:select-primary"
           >
+            <option value="ollama">Ollama (Local — recommended)</option>
+            <option value="lm-studio">LM Studio (Local)</option>
+            <!-- cloud providers hidden — not used
             <option value="openai">OpenAI</option>
             <option value="openrouter">OpenRouter</option>
             <option value="zai">Z.ai (Coding Plan)</option>
             <option value="minimax">MiniMax</option>
             <option value="deepseek">DeepSeek</option>
             <option value="codex">ChatGPT Codex</option>
-            <option value="ollama">Ollama (Local)</option>
-            <option value="lm-studio">LM Studio (Local)</option>
+            -->
           </select>
         </div>
         <div>
