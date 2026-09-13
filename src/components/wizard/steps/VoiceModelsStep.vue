@@ -9,7 +9,7 @@
       </p>
     </div>
 
-    <!-- Local vs Cloud Toggle -->
+    <!-- Local/Cloud toggle hidden — local-only mode enforced
     <div class="bg-base-300/50 p-3 rounded-lg mb-3">
       <div class="form-control">
         <label class="label w-full cursor-pointer">
@@ -30,6 +30,7 @@
         </label>
       </div>
     </div>
+    -->
 
     <div v-if="formData.useLocalModels">
       <!-- Local Models Information -->
@@ -145,8 +146,9 @@
       </div>
     </div>
 
-    <div v-else>
-      <!-- Cloud Models Configuration -->
+    <!-- cloud voice config hidden — local-only mode enforced; restore toggle above to re-enable -->
+    <div v-if="false">
+      <!-- was: v-else -->
       <div class="space-y-4">
         <!-- OpenAI Key requirement for non-OpenAI providers -->
         <div
