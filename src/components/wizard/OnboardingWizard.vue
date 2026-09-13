@@ -127,12 +127,12 @@ const formData = reactive({
   VITE_DEEPSEEK_API_KEY: '',
   codexAuthConnected: false,
   codexAccountLabel: '',
-  aiProvider: 'openai' as AIProviderKey,
+  aiProvider: 'ollama' as AIProviderKey,
   assistantModel: openaiDefaults.assistantModel as string,
   summarizationModel: openaiDefaults.summarizationModel as string,
-  sttProvider: 'openai' as 'openai' | 'groq' | 'google' | 'local',
-  ttsProvider: 'openai' as 'openai' | 'google' | 'local',
-  embeddingProvider: 'openai' as 'openai' | 'local',
+  sttProvider: 'local' as 'openai' | 'groq' | 'google' | 'local',
+  ttsProvider: 'local' as 'openai' | 'google' | 'local',
+  embeddingProvider: 'local' as 'openai' | 'local',
   VITE_GROQ_API_KEY: '',
   VITE_GOOGLE_API_KEY: '',
   ollamaBaseUrl: 'http://localhost:11434',
@@ -140,7 +140,7 @@ const formData = reactive({
   zaiBaseUrl: ZAI_CODING_BASE_URL,
   minimaxBaseUrl: MINIMAX_OPENAI_BASE_URL,
   deepseekBaseUrl: DEEPSEEK_OPENAI_BASE_URL,
-  useLocalModels: false,
+  useLocalModels: true,
   availableModels: [] as string[],
   localSttLanguage: 'auto',
 })
@@ -188,11 +188,17 @@ const canContinue = computed(() => {
     case 3:
       if (formData.useLocalModels) return true
 
-      // Check OpenAI Key requirement for non-OpenAI providers (for voice features)
+      // For local providers, voice is handled locally — no cloud key needed
       if (
-        (formData.aiProvider === 'ollama' ||
-          formData.aiProvider === 'lm-studio' ||
-          formData.aiProvider === 'openrouter' ||
+        formData.aiProvider === 'ollama' ||
+        formData.aiProvider === 'lm-studio'
+      ) {
+        return true
+      }
+
+      // Check OpenAI Key requirement for cloud providers using OpenAI voice
+      if (
+        (formData.aiProvider === 'openrouter' ||
           formData.aiProvider === 'zai' ||
           formData.aiProvider === 'minimax' ||
           formData.aiProvider === 'deepseek' ||

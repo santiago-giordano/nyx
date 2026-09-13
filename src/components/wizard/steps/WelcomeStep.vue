@@ -44,7 +44,7 @@
           </svg>
           <div class="font-medium text-base-content/90">Provider</div>
           <div class="text-sm text-base-content/60 mt-1">
-            OpenAI, OpenRouter, or local runtime.
+            Local via Ollama. No API keys needed.
           </div>
         </div>
 

@@ -1,10 +1,11 @@
 <template>
   <div>
     <div class="mb-6">
-      <h2 class="text-2xl font-semibold mb-3">Choose Your AI Provider</h2>
+      <h2 class="text-2xl font-semibold mb-3">Connect your local model</h2>
       <p class="text-base-content/70">
-        Select how you want to power Nyx's intelligence. You can always change
-        this later.
+        Nyx runs on local models via Ollama. Make sure Ollama is running before
+        testing the connection. Cloud providers are available in Settings if you
+        need them later.
       </p>
     </div>
 
@@ -17,16 +18,14 @@
         class="select select-bordered w-full focus:select-primary focus:outline-none"
         @change="$emit('reset-tests')"
       >
-        <option value="openai">OpenAI (GPT models, image generation)</option>
-        <option value="openrouter">
-          OpenRouter (400+ models, no image gen)
-        </option>
-        <option value="zai">Z.ai (GLM Coding Plan)</option>
-        <option value="minimax">MiniMax (OpenAI-compatible)</option>
-        <option value="deepseek">DeepSeek (OpenAI-compatible)</option>
-        <option value="codex">ChatGPT Codex (subscription)</option>
-        <option value="ollama">Ollama (Local LLMs)</option>
-        <option value="lm-studio">LM Studio (Local LLMs)</option>
+        <option value="ollama">Ollama (local — recommended)</option>
+        <option value="lm-studio">LM Studio (local)</option>
+        <option value="openai">OpenAI (cloud)</option>
+        <option value="openrouter">OpenRouter (cloud)</option>
+        <option value="deepseek">DeepSeek (cloud)</option>
+        <option value="minimax">MiniMax (cloud)</option>
+        <option value="zai">Z.ai (cloud)</option>
+        <option value="codex">ChatGPT Codex (cloud)</option>
       </select>
     </div>
 
