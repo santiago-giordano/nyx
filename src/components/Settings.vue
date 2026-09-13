@@ -42,6 +42,7 @@
         >
           ⌨️ Keys
         </button>
+        <!-- integrations tab hidden: Google/MCP/Jackett/torrent — cloud features not used
         <button
           type="button"
           class="tab"
@@ -50,6 +51,7 @@
         >
           🔌 Apps
         </button>
+        -->
         <button
           type="button"
           class="tab"
@@ -94,6 +96,7 @@
           @clear-hotkey="clearHotkey"
         />
 
+        <!-- IntegrationsTab hidden: cloud integrations not used
         <IntegrationsTab
           v-if="activeTab === 'integrations'"
           :current-settings="currentSettings"
@@ -101,6 +104,7 @@
           @connect-google-services="connectGoogleServices"
           @disconnect-google-services="disconnectGoogleServices"
         />
+        -->
 
         <SecurityTab
           v-if="activeTab === 'security'"
@@ -223,7 +227,7 @@ import {
 import CoreSettingsTab from './settings/CoreSettingsTab.vue'
 import AssistantSettingsTab from './settings/AssistantSettingsTab.vue'
 import HotkeysTab from './settings/HotkeysTab.vue'
-import IntegrationsTab from './settings/IntegrationsTab.vue'
+// import IntegrationsTab from './settings/IntegrationsTab.vue' // hidden: cloud integrations not used
 import SecurityTab from './settings/SecurityTab.vue'
 import UserCustomizationTab from './settings/UserCustomizationTab.vue'
 import MemoryManager from './MemoryManager.vue'
