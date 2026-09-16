@@ -85,6 +85,10 @@ export class BackendManager {
         WHISPER_MODEL_PATH: path.join(modelsDir, 'whisper-base.bin'),
         PIPER_MODEL_PATH: path.join(modelsDir, 'piper'),
         MINILM_MODEL_PATH: path.join(modelsDir, 'minilm'),
+        LD_LIBRARY_PATH:
+          backendDir +
+          ':' +
+          (process.env.LD_LIBRARY_PATH || ''),
       }
 
       // Spawn Go process

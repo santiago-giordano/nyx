@@ -77,7 +77,7 @@ export const createOllamaResponse = async (
 
         return {
           role: 'assistant',
-          content: textContent,
+          content: textContent ?? '',
           tool_calls: localLLMToolCalls,
         }
       } else if (item.role === 'system') {
@@ -111,7 +111,38 @@ export const createOllamaResponse = async (
             : 'Message received.',
       }
     })
-    .filter(msg => msg.content?.trim && msg.content.trim())
+    .filter(msg => {
+      // Keep assistant messages that carry tool_calls even when they have no
+      // text content, otherwise the model loses track of what it already did
+      // (e.g. which URL it opened) and cannot refine a previous action.
+      if (msg.role === 'assistant' && msg.tool_calls?.length) return true
+      return msg.content?.trim && msg.content.trim()
+    })
+    .map(msg => {
+      // Guard against a recurring local-LLM failure mode: the assistant
+      // claims in plain text that it performed an action ("I opened...",
+      // "I'll show you...") without emitting a tool_call. If that false
+      // claim survives in history, the model treats the action as already
+      // done and never retries it on a follow-up request. Strip the claim
+      // so it can't poison future turns; the corresponding tool_calls (if
+      // any) are preserved separately.
+      if (
+        msg.role === 'assistant' &&
+        !msg.tool_calls?.length &&
+        typeof msg.content === 'string' &&
+        (/\b(I('| ha)ve|I'll|I will|I just|I've)\b.{0,40}\b(open|search|show|look up|find|display|navigat|launch|start|run|execut)/i.test(
+          msg.content
+        ) ||
+          /https?:\/\//i.test(msg.content))
+      ) {
+        return {
+          ...msg,
+          content:
+            "(Note: I previously said I would do this but did not actually call a tool, so nothing happened.)",
+        }
+      }
+      return msg
+    })
 
   if (customInstructions && !messages.some(msg => msg.role === 'system')) {
     messages.unshift({

@@ -9,29 +9,37 @@
       "properties": {
         "format": {
           "type": "string",
-          "enum": ["full", "date_only", "time_only", "year_only"],
+          "enum": [
+            "full",
+            "date_only",
+            "time_only",
+            "year_only"
+          ],
           "description": "The format of the datetime information to return. 'full', 'date_only', 'time_only' or 'year_only' are your options. Default is 'full' if not specified."
         }
       },
       "additionalProperties": false,
-      "required": ["format"],
-      "additionalProperties": false
+      "required": [
+        "format"
+      ]
     }
   },
   {
     "type": "function",
     "name": "open_path",
-    "description": "Opens a specified file, folder, or application on the user's computer using the default operating system handler, or opens a URL in the default web browser. Use for launching apps, documents, folders, or websites mentioned by the user. Ask user for their username in system, if needed. If user mention that they are on non Windows OS adjust commands accordingly.",
+    "description": "Opens a specified file, folder, or application on the user's computer, or opens a URL in the default web browser. Use for launching apps, documents, folders, or websites mentioned by the user. The user runs Arch Linux with Hyprland. To open a website (for example a music streaming service such as Qobuz, Spotify or YouTube), pass the full https URL. To open a local application, pass its command name or .desktop name.",
     "strict": true,
     "parameters": {
       "type": "object",
       "properties": {
         "target": {
           "type": "string",
-          "description": "The target to open. Can be an absolute file path (e.g., '/Users/(username)/file.txt'), a folder path (e.g., 'C:\\Users\\(username)\\Documents'), or a full URL (e.g., 'https://www.google.com'). User is using Windows 11, when you need to open an application define a path to it in this OS. Use this tool to open web search result url for user command."
+          "description": "The target to open. Can be an absolute file path (e.g. '/home/helios/file.txt'), a folder path (e.g. '/home/helios/Documents'), a Linux application command (e.g. 'firefox'), or a full URL (e.g. 'https://play.qobuz.com'). The user is on Arch Linux; never use Windows paths."
         }
       },
-      "required": ["target"],
+      "required": [
+        "target"
+      ],
       "additionalProperties": false
     }
   },
@@ -45,7 +53,10 @@
       "properties": {
         "action": {
           "type": "string",
-          "enum": ["read", "write"],
+          "enum": [
+            "read",
+            "write"
+          ],
           "description": "Specifies the operation to perform: 'read' to get text from the clipboard, 'write' to put text onto the clipboard."
         },
         "content": {
@@ -53,7 +64,9 @@
           "description": "The text content to write to the clipboard. Required only when the action is 'write'. Ignored for 'read'."
         }
       },
-      "required": ["action"],
+      "required": [
+        "action"
+      ],
       "additionalProperties": false
     }
   },
@@ -74,7 +87,10 @@
           "description": "The type of memory, like 'personal', 'work', 'hobby'. Default is 'general'."
         }
       },
-      "required": ["content", "memoryType"],
+      "required": [
+        "content",
+        "memoryType"
+      ],
       "additionalProperties": false
     }
   },
@@ -91,7 +107,9 @@
           "description": "The unique ID of the memory to delete. This ID identifies exactly which memory should be removed."
         }
       },
-      "required": ["id"],
+      "required": [
+        "id"
+      ],
       "additionalProperties": false
     }
   },
@@ -129,14 +147,16 @@
           "description": "The absolute path of the directory to list."
         }
       },
-      "required": ["path"],
+      "required": [
+        "path"
+      ],
       "additionalProperties": false
     }
   },
   {
     "type": "function",
     "name": "execute_command",
-    "description": "Executes a shell command on the user's computer. For security, only a limited set of commands are allowed. Use this to perform simple tasks like getting the current IP address or running a script.",
+    "description": "Executes a shell command on the user's computer (Arch Linux with Hyprland, bash shell). The user is prompted to approve each command before it runs. Use this to launch applications, control media playback, or query the system. Prefer open_path for simply opening a URL or app.",
     "strict": true,
     "parameters": {
       "type": "object",
@@ -146,11 +166,12 @@
           "description": "The shell command to execute."
         }
       },
-      "required": ["command"],
+      "required": [
+        "command"
+      ],
       "additionalProperties": false
     }
   },
-
   {
     "type": "function",
     "name": "schedule_task",
@@ -169,7 +190,10 @@
         },
         "action_type": {
           "type": "string",
-          "enum": ["command", "reminder"],
+          "enum": [
+            "command",
+            "reminder"
+          ],
           "description": "Type of action: 'command' to execute a shell command, 'reminder' for Alice to speak a message."
         },
         "details": {
@@ -177,7 +201,12 @@
           "description": "For 'command': the shell command to execute. For 'reminder': the message for Alice to speak."
         }
       },
-      "required": ["name", "schedule", "action_type", "details"],
+      "required": [
+        "name",
+        "schedule",
+        "action_type",
+        "details"
+      ],
       "additionalProperties": false
     }
   },
@@ -191,7 +220,11 @@
       "properties": {
         "action": {
           "type": "string",
-          "enum": ["list", "delete", "toggle"],
+          "enum": [
+            "list",
+            "delete",
+            "toggle"
+          ],
           "description": "Action to perform: 'list' to show all tasks, 'delete' to remove a task, 'toggle' to activate/deactivate a task."
         },
         "task_id": {
@@ -199,7 +232,9 @@
           "description": "The ID of the task to delete or toggle. Required for 'delete' and 'toggle' actions."
         }
       },
-      "required": ["action"],
+      "required": [
+        "action"
+      ],
       "additionalProperties": false
     }
   },
@@ -237,7 +272,9 @@
           "description": "The maximum number of emails to return. Defaults to 10."
         }
       },
-      "required": ["query"],
+      "required": [
+        "query"
+      ],
       "additionalProperties": false
     }
   },
@@ -254,7 +291,9 @@
           "description": "The ID of the email message to fetch."
         }
       },
-      "required": ["messageId"],
+      "required": [
+        "messageId"
+      ],
       "additionalProperties": false
     }
   },
@@ -332,7 +371,11 @@
           }
         }
       },
-      "required": ["summary", "startDateTime", "endDateTime"],
+      "required": [
+        "summary",
+        "startDateTime",
+        "endDateTime"
+      ],
       "additionalProperties": false
     }
   },
@@ -381,7 +424,9 @@
           }
         }
       },
-      "required": ["eventId"],
+      "required": [
+        "eventId"
+      ],
       "additionalProperties": false
     }
   },
@@ -402,7 +447,9 @@
           "description": "The unique ID of the event to delete."
         }
       },
-      "required": ["eventId"],
+      "required": [
+        "eventId"
+      ],
       "additionalProperties": false
     }
   },
@@ -419,7 +466,9 @@
           "description": "The name of the movie, show, or content to search for."
         }
       },
-      "required": ["query"],
+      "required": [
+        "query"
+      ],
       "additionalProperties": false
     }
   },
@@ -436,7 +485,9 @@
           "description": "The magnet link of the torrent to be added to the download queue."
         }
       },
-      "required": ["magnet"],
+      "required": [
+        "magnet"
+      ],
       "additionalProperties": false
     }
   },
@@ -450,7 +501,12 @@
       "properties": {
         "focus": {
           "type": "string",
-          "enum": ["content", "selection", "links", "all"],
+          "enum": [
+            "content",
+            "selection",
+            "links",
+            "all"
+          ],
           "description": "What to focus on: 'content' for page content, 'selection' for highlighted text, 'links' for page links, 'all' for everything. Default is 'all'.",
           "default": "all"
         },
@@ -476,7 +532,9 @@
           "description": "The specific search query or question to look up on the web."
         }
       },
-      "required": ["query"],
+      "required": [
+        "query"
+      ],
       "additionalProperties": false
     }
   },
@@ -506,7 +564,11 @@
         },
         "time_range": {
           "type": "string",
-          "enum": ["day", "month", "year"],
+          "enum": [
+            "day",
+            "month",
+            "year"
+          ],
           "description": "Time range filter for search results. Optional."
         },
         "safesearch": {
@@ -516,7 +578,9 @@
           "description": "Safe search level: 0=off, 1=moderate, 2=strict. Optional."
         }
       },
-      "required": ["query"],
+      "required": [
+        "query"
+      ],
       "additionalProperties": false
     }
   }

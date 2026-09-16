@@ -101,5 +101,13 @@
     "rollup": "4.62.4",
     "underscore": "1.13.8",
     "undici": "7.29.0"
+  },
+  "allowScripts": {
+    "better-sqlite3@12.11.1": true,
+    "bufferutil@4.1.0": true,
+    "electron-winstaller@5.4.0": true,
+    "esbuild@0.25.12": true,
+    "hnswlib-node@3.0.0": true,
+    "protobufjs@7.6.5": true
   }
 }
