@@ -185,24 +185,23 @@
         class="text-xs text-gray-400 mt-4 flex justify-center items-center gap-1"
       >
         <span
-          >Nyx
-          <a
-            :href="
-              'https://github.com/pmbstyle/Alice/releases/tag/v' + appVersion
-            "
-            target="_blank"
-            class="link link-hover"
-            >v{{ appVersion }}</a
-          >. Built with</span
+          >Nyx v{{ appVersion }}. A local fork of</span
         >
+        <a
+          href="https://github.com/pmbstyle/Alice"
+          target="_blank"
+          class="link link-hover"
+          >Alice</a
+        >
+        <span>by pmbstyle. Built with</span>
         <img :src="heartIcon" class="size-3 inline-block ml-1" />
         <span
           >by
           <a
-            href="https://github.com/pmbstyle"
+            href="https://github.com/santiago-giordano/nyx"
             target="_blank"
             class="link link-hover"
-            >pmbstyle</a
+            >santiago-giordano</a
           >
         </span>
       </div>

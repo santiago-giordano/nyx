@@ -41,6 +41,7 @@
     "@electron/rebuild": "4.2.0",
     "@tailwindcss/vite": "^4.3.3",
     "@types/node-cron": "^3.0.11",
+    "@types/ws": "^8.18.1",
     "@vitejs/plugin-vue": "^5.0.4",
     "autoprefixer": "^10.5.0",
     "axios": "^1.19.0",
@@ -65,8 +66,8 @@
   },
   "dependencies": {
     "@ricky0123/vad-web": "0.0.30",
-    "brace-expansion": "2.1.4",
     "better-sqlite3": "^12.11.1",
+    "brace-expansion": "2.1.4",
     "bufferutil": "^4.1.0",
     "cheerio": "^1.0.0-rc.12",
     "dompurify": "^3.4.12",
@@ -81,8 +82,8 @@
     "node-cron": "^4.2.1",
     "onnxruntime-web": "1.27.0",
     "path": "^0.12.7",
-    "picomatch": "4.0.4",
     "pdfjs-dist": "^5.7.284",
+    "picomatch": "4.0.4",
     "turndown": "^7.2.4",
     "vue-router": "^5.0.6",
     "ws": "^8.21.1"

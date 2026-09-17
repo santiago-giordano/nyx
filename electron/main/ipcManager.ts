@@ -12,6 +12,7 @@ import { mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import axios from 'axios'
 import { loadSettings, saveSettings, AppSettings } from './settingsManager'
+import { openInManagedBrowser } from './browserController'
 import {
   getWebSocketServer,
   restartWebSocketServer,
@@ -1029,6 +1030,20 @@ export function registerIPCHandlers(): void {
         if (/^(?:https?|mailto):/i.test(targetPath)) {
           const externalUrl = validateExternalOpenUrl(targetPath)
           console.log(`Opening external URL: ${externalUrl}`)
+          if (/^https?:/i.test(externalUrl)) {
+            try {
+              await openInManagedBrowser(externalUrl)
+              return {
+                success: true,
+                message: `Successfully initiated opening URL: ${targetPath}`,
+              }
+            } catch (managedBrowserError: any) {
+              console.error(
+                'Managed browser open failed, falling back to default handler:',
+                managedBrowserError?.message
+              )
+            }
+          }
           await shell.openExternal(externalUrl)
           return {
             success: true,

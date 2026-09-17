@@ -1101,19 +1101,19 @@ export const useSettingsStore = defineStore('settings', () => {
         successMessage.value +=
           ' (Dev mode - .env might override for operation if not using UI for all settings)'
       }
-      generalStore.statusMessage = 'Re-initializing Alice with new settings...'
+      generalStore.statusMessage = 'Re-initializing Nyx with new settings...'
 
       if (conversationStore.isInitialized) {
         conversationStore.isInitialized = false
       }
       const initSuccess = await conversationStore.initialize()
       if (initSuccess) {
-        successMessage.value += ' Alice is ready.'
+        successMessage.value += ' Nyx is ready.'
         generalStore.setAudioState('IDLE')
       } else {
         const initErrorMsg = generalStore.statusMessage.includes('Error:')
           ? generalStore.statusMessage
-          : 'Failed to re-initialize Alice with new settings.'
+          : 'Failed to re-initialize Nyx with new settings.'
         error.value = (error.value ? error.value + '; ' : '') + initErrorMsg
         successMessage.value = `Settings valid, but ${initErrorMsg}`
       }
