@@ -443,45 +443,11 @@
       </div>
     </fieldset>
 
-    <fieldset
-      v-if="isBrowserContextToolActive"
-      class="fieldset bg-gray-900/90 border-green-500/50 rounded-box w-full border p-4"
-    >
-      <legend class="fieldset-legend">WebSocket Configuration</legend>
-      <div class="space-y-4 p-2">
-        <div>
-          <label
-            for="websocket-port"
-            class="block mb-1 text-sm flex items-center"
-          >
-            WebSocket Port
-            <div
-              class="tooltip tooltip-right"
-              data-tip="The port number for the WebSocket server used by the browser_context tool. Ensure this port is available and not blocked by firewall."
-            >
-              <img :src="infoIcon" class="size-4 ml-1" />
-            </div>
-          </label>
-          <input
-            id="websocket-port"
-            type="number"
-            min="1"
-            max="65535"
-            step="1"
-            v-model.number="currentSettings.websocketPort"
-            class="input input-bordered w-full focus:input-primary"
-          />
-          <p class="text-xs text-gray-400 mt-1">
-            Port number for WebSocket server (1-65535). Default: 5421
-          </p>
-        </div>
-      </div>
-    </fieldset>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import type { NyxSettings } from '../../stores/settingsStore'
 import { useSettingsStore } from '../../stores/settingsStore'
 import { useCustomToolsStore } from '../../stores/customToolsStore'
@@ -511,10 +477,6 @@ const customToolsStore = useCustomToolsStore()
 
 onMounted(() => {
   customToolsStore.ensureInitialized()
-})
-
-const isBrowserContextToolActive = computed(() => {
-  return props.currentSettings.assistantTools.includes('browser_context')
 })
 
 const getProviderDisplayName = (provider: string): string => {

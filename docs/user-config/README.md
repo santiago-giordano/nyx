@@ -31,6 +31,19 @@ then restart nyx.
 - Tools enabled: get_current_datetime, open_path, execute_command,
   list_directory, manage_clipboard, perform_web_search, save_memory,
   delete_memory, recall_memories
+- `docs/functions.json` (the tool schema catalog) was trimmed to only the
+  tools this fork can actually run: the ones above plus `schedule_task`/
+  `manage_scheduled_tasks` (implemented locally, not yet enabled by
+  default). Removed Google Calendar/Gmail, torrent (Jackett/qBittorrent),
+  `browser_context` (needs a browser extension) and `searxng_web_search`
+  (needs a self-hosted instance) — none of these are reachable since the
+  Integrations tab is hidden, so they only cluttered the tool picker in
+  Settings → Assistant.
+- `perform_web_search` requires `VITE_TAVILY_API_KEY`, set in Settings →
+  Assistant (stored only in `~/.config/nyx-ai-app/alice-settings.json`,
+  never committed). Without it the tool silently returns "Tavily API key
+  is not configured." on every call — this was broken for a while before
+  the key was added.
 - Can open Google Images / YouTube / web search via `open_path` with
   constructed URLs (see system prompt for the URL-building rules and Google
   `tbs=` filter reference)
